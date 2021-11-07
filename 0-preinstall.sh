@@ -6,7 +6,7 @@ echo "-------------------------------------------------"
 iso=$(curl -4 ifconfig.co/country-iso)
 timedatectl set-ntp true
 pacman -S --noconfirm pacman-contrib terminus-font
-setfont ter-v22b
+setfont ter-v16n
 sed -i 's/^#Para/Para/' /etc/pacman.conf
 pacman -S --noconfirm reflector rsync grub
 mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
@@ -24,7 +24,7 @@ pacman -S --noconfirm gptfdisk btrfs-progs
 echo "-------------------------------------------------"
 echo "-------select your disk to format----------------"
 echo "-------------------------------------------------"
-lsblk | grep 'disk'
+lsblk | grep "disk"
 echo "Please enter disk to work on: (example /dev/sda)"
 read DISK
 echo "THIS WILL FORMAT AND DELETE ALL DATA ON THE DISK"
