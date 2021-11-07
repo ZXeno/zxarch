@@ -1,12 +1,4 @@
 #!/usr/bin/env bash
-#-------------------------------------------------------------------------
-#   █████╗ ██████╗  ██████╗██╗  ██╗████████╗██╗████████╗██╗   ██╗███████╗
-#  ██╔══██╗██╔══██╗██╔════╝██║  ██║╚══██╔══╝██║╚══██╔══╝██║   ██║██╔════╝
-#  ███████║██████╔╝██║     ███████║   ██║   ██║   ██║   ██║   ██║███████╗
-#  ██╔══██║██╔══██╗██║     ██╔══██║   ██║   ██║   ██║   ██║   ██║╚════██║
-#  ██║  ██║██║  ██║╚██████╗██║  ██║   ██║   ██║   ██║   ╚██████╔╝███████║
-#  ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝   ╚═╝   ╚═╝   ╚═╝    ╚═════╝ ╚══════╝
-#-------------------------------------------------------------------------
 echo "--------------------------------------"
 echo "--          Network Setup           --"
 echo "--------------------------------------"
@@ -71,6 +63,7 @@ PKGS=(
 'automake' # build
 'base'
 'bash-completion'
+'fish'
 'bind'
 'binutils'
 'bison'
@@ -84,10 +77,11 @@ PKGS=(
 'btrfs-progs'
 'celluloid' # video players
 'cmatrix'
-'code' # Visual Studio code
+'cifs-utils'
 'cronie'
 'cups'
 'dialog'
+'discord'
 'discover'
 'dolphin'
 'dosfstools'
@@ -128,13 +122,17 @@ PKGS=(
 'kitty'
 'konsole'
 'kscreen'
+'kwayland'
+'kwayland-integration'
+'kwayland-server'
+'kwin'
 'layer-shell-qt'
 'libdvdcss'
 'libnewt'
 'libtool'
-'linux'
+'linux-zen'
+'linux-zen-headers'
 'linux-firmware'
-'linux-headers'
 'lsof'
 'lutris'
 'lzop'
@@ -160,9 +158,10 @@ PKGS=(
 'powerdevil'
 'powerline-fonts'
 'print-manager'
-'pulseaudio'
-'pulseaudio-alsa'
-'pulseaudio-bluetooth'
+'pipewire'
+'pipewire-alsa'
+'pipewire'
+'python'
 'python-notify2'
 'python-psutil'
 'python-pyqt5'
@@ -184,14 +183,16 @@ PKGS=(
 'unrar'
 'unzip'
 'usbutils'
-'vim'
 'virt-manager'
 'virt-viewer'
+'vivaldi' # browser
+'vlc' # media/video player
 'wget'
 'which'
 'wine-gecko'
 'wine-mono'
 'winetricks'
+'wireplumber'
 'xdg-desktop-portal-kde'
 'xdg-user-dirs'
 'zeroconf-ioslave'
@@ -227,6 +228,8 @@ esac
 if lspci | grep -E "NVIDIA|GeForce"; then
     pacman -S nvidia --noconfirm --needed
 	nvidia-xconfig
+elif lspci | grep -E "VMWare"; then
+	pacman -S xf86-video-vmware --noconfirm --needed
 elif lspci | grep -E "Radeon"; then
     pacman -S xf86-video-amdgpu --noconfirm --needed
 elif lspci | grep -E "Integrated Graphics Controller"; then
@@ -236,14 +239,14 @@ fi
 echo -e "\nDone!\n"
 if ! source install.conf; then
 	read -p "Please enter username:" username
-echo "username=$username" >> ${HOME}/ArchTitus/install.conf
+echo "username=$username" >> ${HOME}/zxarch/install.conf
 fi
 if [ $(whoami) = "root"  ];
 then
     useradd -m -G wheel,libvirt -s /bin/bash $username 
 	passwd $username
-	cp -R /root/ArchTitus /home/$username/
-    chown -R $username: /home/$username/ArchTitus
+	cp -R /root/zxarch /home/$username/
+    chown -R $username: /home/$username/zxarch
 	read -p "Please name your machine:" nameofmachine
 	echo $nameofmachine > /etc/hostname
 else
