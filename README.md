@@ -12,10 +12,8 @@ Download ArchISO from <https://archlinux.org/download/> and put on a USB drive w
 From initial Prompt type the following commands:
 
 ```
-pacman -Sy git
-git clone https://github.com/ZXeno/zxarch
-cd zxarch
-./zxarch.sh
+pacman -Sy --noconfirm git 
+git clone https://github.com/ZXeno/zxarch && cd zxarch &&./zxarch.sh
 ```
 
 ### System Description
