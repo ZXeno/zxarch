@@ -40,7 +40,7 @@ for PKG in "${PKGS[@]}"; do
     yay -S --noconfirm $PKG
 done
 
-bash ./theme/install.sh
+sh ./theme/install.sh
 
 echo -e "\nINSTALLING CUSTOM APPLICATIONS"
 
@@ -48,14 +48,13 @@ echo -e "\nINSTALLING CUSTOM APPLICATIONS"
 cp ./icons/* /usr/share/icons
 
 mkdir $HOME/.local/share/bitwarden
-wget "https://vault.bitwarden.com/download/?app=desktop&platform=linux" $HOME/.local/share/bitwarden/bitwarden.appimage
-cp ./applications/Bitwarden.desktop $HOME/.local/applications/Bitwarden.desktop
+wget "https://vault.bitwarden.com/download/?app=desktop&platform=linux" bitwarden.appimage
+mv ./bitwarden.appimage $HOME/.local/share/bitwarden/bitwarden.appimage
 
 
 echo -e "\nApplying dotfiles"
 export PATH=$PATH:~/.local/bin
-cp -r $HOME/zxarch/dotfiles/.config/* $HOME/.config/
-cp -r $HOME/zxarch/dotfiles/.local/* $HOME/.local/
+cp -r $HOME/zxarch/dotfiles/* $HOME/
 pip install konsave
 #konsave -i $HOME/zxarch/kde.knsv
 #sleep 1
