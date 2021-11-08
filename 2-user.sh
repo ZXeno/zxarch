@@ -40,16 +40,16 @@ for PKG in "${PKGS[@]}"; do
     yay -S --noconfirm $PKG
 done
 
-sh ./theme/install.sh
+sh $HOME/zxarch/theme/install.sh
 
 echo -e "\nINSTALLING CUSTOM APPLICATIONS"
 
 # copy all our custom icons
-cp ./icons/* /usr/share/icons
+cp $HOME/zxarch/icons/* /usr/share/icons
 
 mkdir $HOME/.local/share/bitwarden
-wget "https://vault.bitwarden.com/download/?app=desktop&platform=linux" bitwarden.appimage
-mv ./bitwarden.appimage $HOME/.local/share/bitwarden/bitwarden.appimage
+wget -O bitwarden.appimage "https://vault.bitwarden.com/download/?app=desktop&platform=linux"
+mv $HOME/zxarch/bitwarden.appimage $HOME/.local/share/bitwarden/bitwarden.appimage
 
 
 echo -e "\nApplying dotfiles"
