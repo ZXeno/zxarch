@@ -161,7 +161,6 @@ PKGS=(
 'print-manager'
 'pipewire'
 'pipewire-alsa'
-'pipewire'
 'python'
 'python-notify2'
 'python-psutil'
@@ -196,6 +195,7 @@ PKGS=(
 'wireplumber'
 'xdg-desktop-portal-kde'
 'xdg-user-dirs'
+'x264'
 'zeroconf-ioslave'
 'zip'
 )

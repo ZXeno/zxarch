@@ -31,7 +31,6 @@ PKGS=(
 'powershell-bin'
 'ocs-url' # install packages from websites
 'sddm-nordic-theme-git'
-'snapper-gui-git'
 'timeshift'
 'ttf-droid'
 'ttf-hack'
