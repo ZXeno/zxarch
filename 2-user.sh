@@ -40,21 +40,39 @@ for PKG in "${PKGS[@]}"; do
     yay -S --noconfirm $PKG
 done
 
-sh $HOME/zxarch/theme/install.sh
+echo -e "Extracting the Vortex-Dark theme components to their target locations"
+sudo mkdir -p /usr/share/aurorae/themes/Vortex-Dark
+tar -xvf /home/$username/zxarch/theme/Vortex-Aurorae.tar.gz -C /home/$username/zxarch/theme
+sudo cp -r /home/$username/zxarch/theme/Vortex-Aurorae/* /usr/share/aurorae/themes/Vortex-Dark
+
+sudo mkdir -p /usr/share/icons/Vortex-Dark
+tar -xvf /home/$username/zxarch/theme/Vortex-Dark-Icons.tar.gz -C /home/$username/zxarch/theme
+sudo cp -r /home/$username/zxarch/theme/Vortex-Dark-Icons/* /usr/share/icons/Vortex-Dark
+
+sudo mkdir -p /usr/share/themes/Vortex-Dark
+tar -xvf /home/$username/zxarch/theme/Vortex-GTK.tar.gz -C /home/$username/zxarch/theme
+sudo cp -r /home/$username/zxarch/theme/Vortex-GTK/* /usr/share/themes/Vortex-Dark
+
+sudo mkdir -p /usr/share/sddm/themes/Vortex-SDDM
+tar -xvf /home/$username/zxarch/theme/Vortex-SDDM.tar.gz -C /home/$username/zxarch/theme
+sudo cp -r /home/$username/zxarch/theme/Vortex-SDDM/* /usr/share/sddm/themes/Vortex-SDDM
+
+sudo mkdir -p /usr/share/plasma/look-and-feel/Vortex-Dark
+tar -xvf /home/$username/zxarch/theme/Vortex-Splash.tar.gz -C /home/$username/zxarch/theme
+sudo cp -r /home/$username/zxarch/theme/Vortex-Splash/* /usr/share/plasma/look-and-feel/Vortex-Dark
 
 echo -e "\nINSTALLING CUSTOM APPLICATIONS"
 
 # copy all our custom icons
-cp $HOME/zxarch/icons/* /usr/share/icons
+sudo cp /home/$username/zxarch/icons/* /usr/share/icons
 
-mkdir $HOME/.local/share/bitwarden
+mkdir -p /home/$username/.local/share/bitwarden
 wget -O bitwarden.appimage "https://vault.bitwarden.com/download/?app=desktop&platform=linux"
-mv $HOME/zxarch/bitwarden.appimage $HOME/.local/share/bitwarden/bitwarden.appimage
-
+mv /home/$username/zxarch/bitwarden.appimage $HOME/.local/share/bitwarden/bitwarden.appimage
 
 echo -e "\nApplying dotfiles"
 export PATH=$PATH:~/.local/bin
-cp -r $HOME/zxarch/dotfiles/* $HOME/
+cp -R $HOME/zxarch/dotfiles/* $HOME/
 pip install konsave
 #konsave -i $HOME/zxarch/kde.knsv
 #sleep 1
