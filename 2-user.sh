@@ -10,19 +10,13 @@ cd ${HOME}/yay
 makepkg -si --noconfirm
 cd ~
 
-#zsh
-# touch "$HOME/.cache/zshhistory"
-# git clone "https://github.com/ChrisTitusTech/zsh"
-# git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $HOME/powerlevel10k
-# ln -s "$HOME/zsh/.zshrc" $HOME/.zshrc
-
 PKGS=(
 'autojump'
 'awesome-terminal-fonts'
 'dxvk-bin' # DXVK DirectX to Vulcan
+'gitkraken'
 'nerd-fonts-fira-code'
 'noto-fonts-emoji'
-'papirus-icon-theme'
 'plasma-pa'
 'powershell-bin'
 'ocs-url' # install packages from websites
@@ -40,7 +34,7 @@ for PKG in "${PKGS[@]}"; do
 done
 
 echo -e "Extracting the Vortex-Dark theme components to their target locations"
-sudo mkdir -p /usr/share/aurorae/themes/Vortex-Dark
+sudo mkdir -p /usr/share/aurorae/themes/Vortex-Aurorae
 tar -xvf ${HOME}/zxarch/theme/Vortex-Aurorae.tar.gz -C ${HOME}/zxarch/theme
 sudo cp -r ${HOME}/zxarch/theme/Vortex-Aurorae/* /usr/share/aurorae/themes/Vortex-Aurorae
 
@@ -72,7 +66,7 @@ sudo cp ${HOME}/zxarch/icons/* /usr/share/icons
 
 echo -e "\nApplying dotfiles"
 export PATH=$PATH:~/.local/bin
-cp -R $HOME/zxarch/dotfiles/* $HOME/
+cp -R $HOME/zxarch/dotfiles/. $HOME/
 pip install konsave
 konsave -i $HOME/zxarch/kde.knsv
 sleep 1
@@ -84,7 +78,7 @@ wget -O bitwarden.appimage "https://vault.bitwarden.com/download/?app=desktop&pl
 mv ${HOME}/bitwarden.appimage ${HOME}/.local/share/bitwarden/bitwarden.appimage
 
 # make sure application shortcuts are properly configured
-for f in ${HOME}/.local/share/applications/*
+for f in ${HOME}/.local/share/applications/.
 do
     sed -i "s|{{HOME}}|${HOME}|g" $f
 done
