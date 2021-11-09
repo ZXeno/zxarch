@@ -186,6 +186,7 @@ PKGS=(
 'telegram-desktop'
 'terminus-font'
 'traceroute'
+'ttf-cascadia-code'
 'ufw'
 'unrar'
 'unzip'

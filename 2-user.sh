@@ -78,7 +78,7 @@ wget -O bitwarden.appimage "https://vault.bitwarden.com/download/?app=desktop&pl
 mv ${HOME}/bitwarden.appimage ${HOME}/.local/share/bitwarden/bitwarden.appimage
 
 # make sure application shortcuts are properly configured
-for f in ${HOME}/.local/share/applications/.
+for f in ${HOME}/.local/share/applications/*
 do
     sed -i "s|{{HOME}}|${HOME}|g" $f
 done
