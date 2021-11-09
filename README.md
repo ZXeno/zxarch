@@ -1,6 +1,6 @@
 # zxarch Installer Script
 
-This README contains an increasingly modified version of the scripts ChrisTitusTech uses to perform an install and configure a fully-functional Arch Linux installation containing a desktop environment, all the support packages (network, bluetooth, audio, printers, etc.), along with preferred applications and utilities. The shell scripts in this repo allow the entire process to be automated.)
+This README contains an increasingly modified version of the scripts ChrisTitusTech uses to perform an install and configure a fully-functional Arch Linux installation containing a desktop environment, all the support packages (network, bluetooth, audio, printers, etc.), along with preferred applications and utilities. The shell scripts in this repo allow the entire process to be automated.
 
 ---
 ## Create Arch ISO or Use Image

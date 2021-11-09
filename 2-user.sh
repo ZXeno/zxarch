@@ -33,7 +33,6 @@ PKGS=(
 'ttf-ms-fonts'
 'ttf-roboto'
 'visual-studio-code-bin'
-'xcursor-sweet'
 )
 
 for PKG in "${PKGS[@]}"; do
@@ -43,7 +42,7 @@ done
 echo -e "Extracting the Vortex-Dark theme components to their target locations"
 sudo mkdir -p /usr/share/aurorae/themes/Vortex-Dark
 tar -xvf ${HOME}/zxarch/theme/Vortex-Aurorae.tar.gz -C ${HOME}/zxarch/theme
-sudo cp -r ${HOME}/zxarch/theme/Vortex-Aurorae/* /usr/share/aurorae/themes/Vortex-Dark
+sudo cp -r ${HOME}/zxarch/theme/Vortex-Aurorae/* /usr/share/aurorae/themes/Vortex-Aurorae
 
 sudo mkdir -p /usr/share/icons/Vortex-Dark
 tar -xvf ${HOME}/zxarch/theme/Vortex-Dark-Icons.tar.gz -C ${HOME}/zxarch/theme
@@ -61,22 +60,34 @@ sudo mkdir -p /usr/share/plasma/look-and-feel/Vortex-Dark
 tar -xvf ${HOME}/zxarch/theme/Vortex-Splash.tar.gz -C ${HOME}/zxarch/theme
 sudo cp -r ${HOME}/zxarch/theme/Vortex-Splash/* /usr/share/plasma/look-and-feel/Vortex-Dark
 
+sudo mkdir -p /usr/share/plasma/desktoptheme/Vortex-Dark
+tar -xvf ${HOME}/zxarch/theme/Vortex-Plasma.tar.gz -C ${HOME}/zxarch/theme
+sudo cp -r ${HOME}/zxarch/theme/Vortex-Plasma/Vortex/* /usr/share/plasma/desktoptheme/Vortex-Dark
+sudo cp ${HOME}/zxarch/theme/Vortex-Plasma/Vortex/colors  /usr/share/color-schemes/Vortex-Dark.colors
+
 echo -e "\nINSTALLING CUSTOM APPLICATIONS"
 
 # copy all our custom icons
 sudo cp ${HOME}/zxarch/icons/* /usr/share/icons
 
-mkdir -p ${HOME}/.local/share/bitwarden
-wget -O bitwarden.appimage "https://vault.bitwarden.com/download/?app=desktop&platform=linux"
-mv ${HOME}/zxarch/bitwarden.appimage $HOME/.local/share/bitwarden/bitwarden.appimage
-
 echo -e "\nApplying dotfiles"
 export PATH=$PATH:~/.local/bin
 cp -R $HOME/zxarch/dotfiles/* $HOME/
 pip install konsave
-#konsave -i $HOME/zxarch/kde.knsv
-#sleep 1
-#konsave -a kde
+konsave -i $HOME/zxarch/kde.knsv
+sleep 1
+konsave -a kde
+
+
+mkdir -p ${HOME}/.local/share/bitwarden
+wget -O bitwarden.appimage "https://vault.bitwarden.com/download/?app=desktop&platform=linux"
+mv ${HOME}/bitwarden.appimage ${HOME}/.local/share/bitwarden/bitwarden.appimage
+
+# make sure application shortcuts are properly configured
+for f in ${HOME}/.local/share/applications/*
+do
+    sed -i "s|{{HOME}}|${HOME}|g" $f
+done
 
 echo -e "\nDone!\n"
 exit
