@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 
-echo -e "\nINSTALLING AUR SOFTWARE\n"
+echo ""
+echo "-------------------------------"
+echo "    INSTALLING AUR SOFTWARE    "
+echo "-------------------------------"
 # You can solve users running this script as root with this and then doing the same for the next for statement. However I will leave this up to you.
 
-echo "CLONING: YAY"
+echo "Cloning YAY"
 cd ~
 git clone "https://aur.archlinux.org/yay.git"
 cd ${HOME}/yay
@@ -14,13 +17,13 @@ PKGS=(
 'autojump'
 'awesome-terminal-fonts'
 'dxvk-bin' # DXVK DirectX to Vulcan
-'gitkraken'
+'gitkraken' # git gui
 'nerd-fonts-fira-code'
 'noto-fonts-emoji'
 'plasma-pa'
 'powershell-bin'
 'ocs-url' # install packages from websites
-'timeshift'
+'timeshift' # backup software
 'ttf-droid'
 'ttf-hack'
 'ttf-meslo' # Nerdfont package
@@ -33,40 +36,50 @@ for PKG in "${PKGS[@]}"; do
     yay -S --noconfirm $PKG
 done
 
-echo -e "\nExtracting the Vortex-Dark theme components to their target locations"
+echo ""
+echo "-------------------------------------------------------------"
+echo " Extracting Vortex-Dark theme components to target locations "
+echo "-------------------------------------------------------------"
+
 sudo mkdir -p /usr/share/aurorae/themes/Vortex-Aurorae
-tar -xvf ${HOME}/zxarch/theme/Vortex-Aurorae.tar.gz -C ${HOME}/zxarch/theme
-sudo cp -r ${HOME}/zxarch/theme/Vortex-Aurorae/* /usr/share/aurorae/themes/Vortex-Aurorae
+tar -xf ${HOME}/zxarch/theme/Vortex-Aurorae.tar.gz -C ${HOME}/zxarch/theme
+sudo cp -rv ${HOME}/zxarch/theme/Vortex-Aurorae/* /usr/share/aurorae/themes/Vortex-Aurorae
 
 sudo mkdir -p /usr/share/icons/Vortex-Dark
-tar -xvf ${HOME}/zxarch/theme/Vortex-Dark-Icons.tar.gz -C ${HOME}/zxarch/theme
-sudo cp -r ${HOME}/zxarch/theme/Vortex-Dark-Icons/* /usr/share/icons/Vortex-Dark
+tar -xf ${HOME}/zxarch/theme/Vortex-Dark-Icons.tar.gz -C ${HOME}/zxarch/theme
+sudo cp -rv ${HOME}/zxarch/theme/Vortex-Dark-Icons/* /usr/share/icons/Vortex-Dark
 
 sudo mkdir -p /usr/share/themes/Vortex-Dark
-tar -xvf ${HOME}/zxarch/theme/Vortex-GTK.tar.gz -C ${HOME}/zxarch/theme
-sudo cp -r ${HOME}/zxarch/theme/Vortex-GTK/* /usr/share/themes/Vortex-Dark
+tar -xf ${HOME}/zxarch/theme/Vortex-GTK.tar.gz -C ${HOME}/zxarch/theme
+sudo cp -rv ${HOME}/zxarch/theme/Vortex-GTK/* /usr/share/themes/Vortex-Dark
 
 sudo mkdir -p /usr/share/sddm/themes/Vortex-SDDM
-tar -xvf ${HOME}/zxarch/theme/Vortex-SDDM.tar.gz -C ${HOME}/zxarch/theme
-sudo cp -r ${HOME}/zxarch/theme/Vortex-SDDM/* /usr/share/sddm/themes/Vortex-SDDM
+tar -xf ${HOME}/zxarch/theme/Vortex-SDDM.tar.gz -C ${HOME}/zxarch/theme
+sudo cp -rv ${HOME}/zxarch/theme/Vortex-SDDM/* /usr/share/sddm/themes/Vortex-SDDM
 
-# sudo mkdir -p /usr/share/plasma/look-and-feel/Vortex-Dark
-# tar -xvf ${HOME}/zxarch/theme/Vortex-Splash.tar.gz -C ${HOME}/zxarch/theme
-# sudo cp -r ${HOME}/zxarch/theme/Vortex-Splash/* /usr/share/plasma/look-and-feel/Vortex-Dark
+sudo mkdir -p /usr/share/plasma/look-and-feel/Vortex-Dark
+tar -xf ${HOME}/zxarch/theme/Vortex-Splash.tar.gz -C ${HOME}/zxarch/theme
+sudo cp -rv ${HOME}/zxarch/theme/Vortex-Splash/* /usr/share/plasma/look-and-feel/Vortex-Dark
 
 sudo mkdir -p /usr/share/plasma/desktoptheme/Vortex-Dark
-tar -xvf ${HOME}/zxarch/theme/Vortex-Plasma.tar.gz -C ${HOME}/zxarch/theme
-tar -xvf ${HOME}/zxarch/theme/Vortex-Splash.tar.gz -C ${HOME}/zxarch/theme
-sudo cp -r ${HOME}/zxarch/theme/Vortex-Splash/* /usr/share/plasma/desktoptheme/Vortex-Dark
-sudo cp -r ${HOME}/zxarch/theme/Vortex-Plasma/Vortex/* /usr/share/plasma/desktoptheme/Vortex-Dark
+tar -xf ${HOME}/zxarch/theme/Vortex-Plasma.tar.gz -C ${HOME}/zxarch/theme
+sudo cp -rv ${HOME}/zxarch/theme/Vortex-Plasma/Vortex/* /usr/share/plasma/desktoptheme/Vortex-Dark
 sudo cp ${HOME}/zxarch/theme/Vortex-Plasma/Vortex/colors  /usr/share/color-schemes/Vortex-Dark.colors
 
-echo -e "\nINSTALLING CUSTOM APPLICATIONS"
+sudo mkdir -p /usr/share/wallpapers/zxarch
+tar -xf ${HOME}/zxarch/theme/zxarch-Wallpapers.tar.gz -C ${HOME}/zxarch/theme
+sudo cp -rv ${HOME}/zxarch/theme/zxarch-Wallpapers/*.png /usr/share/wallpapers
+sudo cp -rv ${HOME}/zxarch/theme/zxarch-Wallpapers/*.jpg /usr/share/wallpapers
 
 # copy all our custom icons
-sudo cp ${HOME}/zxarch/icons/* /usr/share/icons
+sudo cp -rv ${HOME}/zxarch/icons/* /usr/share/icons
 
-echo -e "\nApplying dotfiles"
+
+echo ""
+echo "-------------------------------------"
+echo "    Applying Dotfiles & KDE Config   "
+echo "-------------------------------------"
+
 export PATH=$PATH:~/.local/bin
 pip install konsave
 konsave -i $HOME/zxarch/kde.knsv
@@ -74,6 +87,11 @@ sleep 1
 konsave -a kde
 
 cp -R $HOME/zxarch/dotfiles/. $HOME/
+
+echo ""
+echo "---------------------------------------"
+echo "    INSTALLING NON-AUR APPLICATIONS    "
+echo "---------------------------------------"
 
 mkdir -p ${HOME}/.local/share/bitwarden
 wget -O bitwarden.appimage "https://vault.bitwarden.com/download/?app=desktop&platform=linux"
@@ -85,7 +103,10 @@ do
     sed -i "s|{{HOME}}|${HOME}|g" $f
 done
 
-# copy sys config files
+echo ""
+echo "---------------------------------"
+echo "    SET CUSTOM SYSTEM CONFIGS    "
+echo "---------------------------------"
 
 sudo cp $HOME/zxarch/sysconf/99-swappiness.conf /etc/sysctl.d/99-swappiness.conf
 

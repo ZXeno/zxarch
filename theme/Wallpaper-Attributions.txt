@@ -1,0 +1,80 @@
+How this file is structured:
+
+[Image Title:File Name]
+Author/Creator
+License Type
+Link_To_Portfolio
+
+If you wish your image to be removed from this collection, please submit a request to the repo author. The original repo URL is <https://github.com/zxeno/zxarch>
+
+CC Rules Abidance:
+https://creativecommons.org/licenses/by/2.0/
+https://creativecommons.org/licenses/by/4.0/
+https://creativecommons.org/public-domain/cc0/
+
+------------------------------------------------
+
+[Exploring The Moon:exploring-the-moon-2560x1440_665888-mt-90.jpg]
+Enrique Lopez
+License : CC BY 4.0
+https://pixabay.com/users/enriquelopezgarre-3764790/
+
+[Computer Hard Disk:hard-drive-disk-photo-2560x1440_479644-mm-90.jpg]
+The Preiser Project
+License : CC BY 4.0
+https://www.flickr.com/photos/thepreiserproject/
+
+[Man in the Moon:11702218745_b73c61220f_o.jpg]
+The Preiser Project
+License : CC BY 2.0
+https://www.flickr.com/photos/thepreiserproject/
+
+[Hamburg, Germany, cityscape:cityscape-photography-4k-hamburg-germany-2560x1440_944595-mm-90.jpg]
+Jorg Angeli
+License : CC BY 4.0
+https://www.instagram.com/joerga/
+
+[The exterior design of EMP Museum:exterior-design-of-emp-museum-2560x1440_75758-mm-90.jpg]
+Sergei Akulich
+License : PD CC0
+https://sergeiak.com
+
+[Reflection nebula in Orion:reflection-nebula-in-orion-2560x1440_97654-mm-90.jpg]
+ESO, Igor Chekalin
+License : CC BY 4.0
+https://www.eso.org/public/images/eso1105a/
+
+[Blue And Purple No Logo:Blue_And_Purple_No_Logo.png]
+Charlie Hensen
+License : CC BY 4.0
+https://www.opendesktop.org/u/charlie-henson
+
+[Blue Purple With Logo:Blue_Purple_With_Logo.png]
+Charlie Hensen
+License : CC BY 4.0
+https://www.opendesktop.org/u/charlie-henson
+
+[Green Blue No Logo:Green_Blue_No_Logo.png]
+Charlie Hensen
+License : CC BY 4.0
+https://www.opendesktop.org/u/charlie-henson
+
+[Green Blue With Logo:Green_Blue_With_Logo.png]
+Charlie Hensen
+License : CC BY 4.0
+https://www.opendesktop.org/u/charlie-henson
+
+[KDE Plasma Nebula 273:KDE_Plasma_Nebula_273.png]
+Charlie Hensen
+License : CC BY 4.0
+https://www.opendesktop.org/u/charlie-henson
+
+[No Logo NEB 273:No_Logo_NEB_273.png]
+Charlie Hensen
+License : CC BY 4.0
+https://www.opendesktop.org/u/charlie-henson
+
+[Purple And Teal No Logo:Purple_And_Teal_No_Logo.png]
+Charlie Hensen
+License : CC BY 4.0
+https://www.opendesktop.org/u/charlie-henson

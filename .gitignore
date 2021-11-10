@@ -1,13 +1,6 @@
 install.conf
 installlog.txt
-theme/Vortex-Aurorae/
 
-theme/Vortex-Dark-Icons/
-
-theme/Vortex-GTK/
-
-theme/Vortex-Plasma/
-
-theme/Vortex-SDDM/
-
-theme/Vortex-Splash/
+# directory ignores
+# (zip extracts shouldn't track)
+theme/*/

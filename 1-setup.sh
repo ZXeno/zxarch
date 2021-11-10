@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
+echo ""
 echo "--------------------------------------"
 echo "--          Network Setup           --"
 echo "--------------------------------------"
 pacman -S networkmanager dhclient --noconfirm --needed
 systemctl enable --now NetworkManager
+echo ""
 echo "-------------------------------------------------"
 echo "Setting up mirrors for optimal download          "
 echo "-------------------------------------------------"
@@ -21,6 +23,7 @@ sed -i "s/#MAKEFLAGS=\"-j2\"/MAKEFLAGS=\"-j$nc\"/g" /etc/makepkg.conf
 echo "Changing the compression settings for "$nc" cores."
 sed -i "s/COMPRESSXZ=(xz -c -z -)/COMPRESSXZ=(xz -c -T $nc -z -)/g" /etc/makepkg.conf
 fi
+echo ""
 echo "-------------------------------------------------"
 echo "       Setup Language to US and set locale       "
 echo "-------------------------------------------------"
@@ -232,7 +235,9 @@ case "$proc_type" in
 		;;
 esac	
 
-# Graphics Drivers find and install
+echo "----------------------------"
+echo "Install Graphics Drivers... "
+echo "----------------------------"
 if lspci | grep -E "NVIDIA|GeForce"; then
     pacman -S nvidia --noconfirm --needed
 	nvidia-xconfig
@@ -244,7 +249,9 @@ elif lspci | grep -E "Integrated Graphics Controller"; then
     pacman -S libva-intel-driver libvdpau-va-gl lib32-vulkan-intel vulkan-intel libva-intel-driver libva-utils --needed --noconfirm
 fi
 
-echo -e "\nDone!\n"
+echo ""
+echo "Done!"
+echo ""
 if ! source install.conf; then
 	read -p "Please enter username:" username
 echo "username=$username" >> ${HOME}/zxarch/install.conf
