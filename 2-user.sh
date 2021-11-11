@@ -16,6 +16,7 @@ cd ~
 PKGS=(
 'autojump'
 'awesome-terminal-fonts'
+'btrfsmaintenance'
 'dxvk-bin' # DXVK DirectX to Vulcan
 'gitkraken' # git gui
 'nerd-fonts-fira-code'
@@ -38,7 +39,7 @@ done
 
 echo ""
 echo "-------------------------------------------------------------"
-echo " Extracting Vortex-Dark theme components to target locations "
+echo " EXTRACTING VORTEX-DARK THEME COMPONENTS TO TARGET LOCATIONS "
 echo "-------------------------------------------------------------"
 
 sudo mkdir -p /usr/share/aurorae/themes/Vortex-Aurorae
@@ -77,7 +78,7 @@ sudo cp -rv ${HOME}/zxarch/icons/* /usr/share/icons
 
 echo ""
 echo "-------------------------------------"
-echo "    Applying Dotfiles & KDE Config   "
+echo "    APPLYING DOTFILES & KDE CONFIG   "
 echo "-------------------------------------"
 
 export PATH=$PATH:~/.local/bin
@@ -96,19 +97,13 @@ echo "---------------------------------------"
 mkdir -p ${HOME}/.local/share/bitwarden
 wget -O bitwarden.appimage "https://vault.bitwarden.com/download/?app=desktop&platform=linux"
 mv ${HOME}/bitwarden.appimage ${HOME}/.local/share/bitwarden/bitwarden.appimage
+chmod +rwx ${HOME}/.local/share/bitwarden/bitwarden.appimage
 
 # make sure custom application shortcuts are properly configured
 for f in ${HOME}/.local/share/applications/*
 do
     sed -i "s|{{HOME}}|${HOME}|g" $f
 done
-
-echo ""
-echo "---------------------------------"
-echo "    SET CUSTOM SYSTEM CONFIGS    "
-echo "---------------------------------"
-
-sudo cp $HOME/zxarch/sysconf/99-swappiness.conf /etc/sysctl.d/99-swappiness.conf
 
 echo -e "\nDone!\n"
 exit

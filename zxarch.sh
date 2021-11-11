@@ -7,5 +7,5 @@
     arch-chroot /mnt /root/zxarch/3-post-setup.sh
 
     # cleanup post script - uncomment after development
-    #rm -rf /mnt/home/$username/zxarch
-    #rm -rf /mnt/home/$username/yay
+    rm -rf /mnt/home/$username/zxarch
+    rm -rf /mnt/home/$username/yay

@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
 echo ""
-echo "--------------------------------------"
-echo "--          Network Setup           --"
-echo "--------------------------------------"
+echo "---------------------"
+echo "    NETWORK SETUP    "
+echo "---------------------"
 pacman -S networkmanager dhclient --noconfirm --needed
 systemctl enable --now NetworkManager
+
 echo ""
-echo "-------------------------------------------------"
-echo "Setting up mirrors for optimal download          "
-echo "-------------------------------------------------"
+echo "-----------------------------------------------"
+echo "    SETTING UP MIRRORS FOR OPTIMAL DOWNLOAD    "
+echo "-----------------------------------------------"
 pacman -S --noconfirm pacman-contrib curl
 pacman -S --noconfirm reflector rsync
 cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
@@ -23,10 +24,11 @@ sed -i "s/#MAKEFLAGS=\"-j2\"/MAKEFLAGS=\"-j$nc\"/g" /etc/makepkg.conf
 echo "Changing the compression settings for "$nc" cores."
 sed -i "s/COMPRESSXZ=(xz -c -z -)/COMPRESSXZ=(xz -c -T $nc -z -)/g" /etc/makepkg.conf
 fi
+
 echo ""
-echo "-------------------------------------------------"
-echo "       Setup Language to US and set locale       "
-echo "-------------------------------------------------"
+echo "-------------------------------------------"
+echo "    SETUP LANGUAGE TO US AND SET LOCALE    "
+echo "-------------------------------------------"
 sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
 locale-gen
 timedatectl --no-ask-password set-timezone America/Los_Angeles
@@ -46,7 +48,10 @@ sed -i 's/^#Para/Para/' /etc/pacman.conf
 sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
 pacman -Sy --noconfirm
 
-echo -e "\nInstalling Base System\n"
+echo ""
+echo "-----------------------------------------------"
+echo "    INSTALLING BASE SYSTEM - PLEASE STANDBY    "
+echo "-----------------------------------------------"
 
 PKGS=(
 'mesa' # Essential Xorg First
@@ -105,6 +110,7 @@ PKGS=(
 'gimp' # Photo editing
 'git'
 'github-cli'
+'gpg'
 'gparted' # partition management
 'gptfdisk'
 'grub'
@@ -197,6 +203,7 @@ PKGS=(
 'virt-manager'
 'virt-viewer'
 'vivaldi' # browser
+'vivaldi-ffmpeg-codecs' # browser media codecs pack
 'vlc' # media/video player
 'wget'
 'which'
@@ -235,9 +242,9 @@ case "$proc_type" in
 		;;
 esac	
 
-echo "----------------------------"
-echo "Install Graphics Drivers... "
-echo "----------------------------"
+echo "--------------------------------"
+echo "    INSTALL GRAPHICS DRIVERS    "
+echo "--------------------------------"
 if lspci | grep -E "NVIDIA|GeForce"; then
     pacman -S nvidia --noconfirm --needed
 	nvidia-xconfig

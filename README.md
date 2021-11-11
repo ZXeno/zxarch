@@ -5,7 +5,7 @@ This README contains an increasingly modified version of the scripts ChrisTitusT
 ---
 ## Create Arch ISO or Use Image
 
-Download ArchISO from <https://archlinux.org/download/> and put on a USB drive with Ventoy or Etcher
+Download Arch ISO from <https://archlinux.org/download/> and put on a USB drive with Ventoy or Etcher
 
 ## Boot Arch ISO
 
@@ -23,7 +23,7 @@ This is completely automated arch install of the KDE desktop environment on arch
 
 __[Arch Linux Installation Guide](https://github.com/rickellis/Arch-Linux-Install-Guide)__
 
-### No Wifi
+### Connect Wifi at install
 
 #1: Run `iwctl`
 
@@ -39,3 +39,15 @@ __[Arch Linux Installation Guide](https://github.com/rickellis/Arch-Linux-Instal
 
 - Original script(s) repo is located here: https://github.com/ChrisTitusTech/ArchTitus
 - Thank you to Chris Titus of ChrisTitusTech for the script(s) and very helpful information made freely available to the community.
+
+### Notable config changes:
+- Zen kernel
+- Vivaldi browser
+- Pipewire & Wireplumber > Pulseaudio
+- KDE wayland support installed
+- Bitwarden Appimage install
+- Gitkraken
+- Vortex Theme by L4k1
+- VS-Code from Microsoft binaries
+- Telegram client
+- minor performance tweaks

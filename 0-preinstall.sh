@@ -1,28 +1,31 @@
 #!/usr/bin/env bash
 SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-echo "-------------------------------------------------"
-echo "Setting up mirrors for optimal download          "
-echo "-------------------------------------------------"
+
+echo ""
+echo "-----------------------------------------------"
+echo "    SETTING UP MIRRORS FOR OPTIMAL DOWNLOAD    "
+echo "-----------------------------------------------"
 iso=$(curl -4 ifconfig.co/country-iso)
 timedatectl set-ntp true
-pacman -S --noconfirm pacman-contrib terminus-font
+pacman -S --noconfirm pacman-contrib
 sed -i 's/^#Para/Para/' /etc/pacman.conf
 pacman -S --noconfirm reflector rsync grub
-mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
-echo -e "-------------------------------------------------------------------------"
-echo -e "-Setting up $iso mirrors for faster downloads"
-echo -e "-------------------------------------------------------------------------"
+cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
 
+echo ""
+echo -e "----------------------------------------------------"
+echo -e "    SETTING UP $iso MIRRORS FOR FASTER DOWNLOADS    "
+echo -e "----------------------------------------------------"
 reflector -a 48 -c $iso -f 5 -l 20 --sort rate --save /etc/pacman.d/mirrorlist
 mkdir /mnt
-
 
 echo -e "\nInstalling prereqs...\n$HR"
 pacman -S --noconfirm gptfdisk btrfs-progs
 
-echo "-------------------------------------------------"
-echo "-------select your disk to format----------------"
-echo "-------------------------------------------------"
+echo ""
+echo "----------------------------------"
+echo "    SELECT YOUR DISK TO FORMAT    "
+echo "----------------------------------"
 lsblk | grep "disk"
 echo "Please enter disk to work on: (example /dev/sda)"
 read DISK
@@ -31,12 +34,14 @@ read -p "are you sure you want to continue (Y/N):" formatdisk
 case $formatdisk in
 
 y|Y|yes|Yes|YES)
-echo "--------------------------------------"
-echo -e "\nFormatting disk...\n$HR"
-echo "--------------------------------------"
+
+echo ""
+echo "-----------------------------"
+echo "    FORMATTING DISK...$HR    "
+echo "-----------------------------"
 
 # disk prep
-sgdisk -Z ${DISK} # zap all on disk
+sgdisk -Z ${DISK} && # zap all on disk
 sgdisk -a 2048 -o ${DISK} # new gpt disk 2048 alignment
 
 # create partitions
@@ -84,23 +89,28 @@ if ! grep -qs '/mnt' /proc/mounts; then
     reboot now
 fi
 
-echo "--------------------------------------"
-echo "-- Arch Install on Main Drive       --"
-echo "--------------------------------------"
+echo ""
+echo "----------------------------------"
+echo "    ARCH INSTALL ON MAIN DRIVE    "
+echo "----------------------------------"
 pacstrap /mnt base base-devel linux-zen linux-firmware vim nano sudo archlinux-keyring wget libnewt --noconfirm --needed
 genfstab -U /mnt >> /mnt/etc/fstab
 echo "keyserver hkp://keyserver.ubuntu.com" >> /mnt/etc/pacman.d/gnupg/gpg.conf
 cp -R ${SCRIPT_DIR} /mnt/root/zxarch
 cp /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist
-echo "--------------------------------------"
-echo "--GRUB BIOS Bootloader Install&Check--"
-echo "--------------------------------------"
+
+echo ""
+echo "--------------------------------------------"
+echo "    GRUB BIOS Bootloader Install & Check    "
+echo "--------------------------------------------"
 if [[ ! -d "/sys/firmware/efi" ]]; then
     grub-install --boot-directory=/mnt/boot ${DISK}
 fi
-echo "--------------------------------------"
-echo "-- Check for low memory systems <8G --"
-echo "--------------------------------------"
+
+echo ""
+echo "----------------------------------------"
+echo "    CHECK FOR LOW MEMORY SYSTEMS <8G    "
+echo "----------------------------------------"
 TOTALMEM=$(cat /proc/meminfo | grep -i 'memtotal' | grep -o '[[:digit:]]*')
 if [[  $TOTALMEM -lt 8000000 ]]; then
     #Put swap into the actual system, not into RAM disk, otherwise there is no point in it, it'll cache RAM into RAM. So, /mnt/ everything.
@@ -114,6 +124,8 @@ if [[  $TOTALMEM -lt 8000000 ]]; then
     #The line below is written to /mnt/ but doesn't contain /mnt/, since it's just / for the sysytem itself.
     echo "/opt/swap/swapfile	none	swap	sw	0	0" >> /mnt/etc/fstab #Add swap to fstab, so it KEEPS working after installation.
 fi
-echo "--------------------------------------"
-echo "--   SYSTEM READY FOR 1-setup       --"
-echo "--------------------------------------"
+
+echo ""
+echo "--------------------------------"
+echo "    SYSTEM READY FOR 1-setup    "
+echo "--------------------------------"
