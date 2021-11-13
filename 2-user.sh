@@ -59,8 +59,8 @@ tar -xf ${HOME}/zxarch/theme/Vortex-SDDM.tar.gz -C ${HOME}/zxarch/theme
 sudo cp -rv ${HOME}/zxarch/theme/Vortex-SDDM/* /usr/share/sddm/themes/Vortex-SDDM
 
 sudo mkdir -p /usr/share/plasma/look-and-feel/Vortex-Dark
-tar -xf ${HOME}/zxarch/theme/Vortex-Splash.tar.gz -C ${HOME}/zxarch/theme
-sudo cp -rv ${HOME}/zxarch/theme/Vortex-Splash/* /usr/share/plasma/look-and-feel/Vortex-Dark
+tar -xf ${HOME}/zxarch/theme/Vortex-Global.tar.gz -C ${HOME}/zxarch/theme
+sudo cp -rv ${HOME}/zxarch/theme/Vortex-Global/* /usr/share/plasma/look-and-feel/Vortex-Dark
 
 sudo mkdir -p /usr/share/plasma/desktoptheme/Vortex-Dark
 tar -xf ${HOME}/zxarch/theme/Vortex-Plasma.tar.gz -C ${HOME}/zxarch/theme
@@ -81,11 +81,11 @@ echo "-------------------------------------"
 echo "    APPLYING DOTFILES & KDE CONFIG   "
 echo "-------------------------------------"
 
-export PATH=$PATH:~/.local/bin
-pip install konsave
-konsave -i $HOME/zxarch/kde.knsv
-sleep 1
-konsave -a kde
+# export PATH=$PATH:~/.local/bin
+# pip install konsave
+# konsave -i $HOME/zxarch/kde.knsv
+# sleep 1
+# konsave -a kde
 
 cp -R $HOME/zxarch/dotfiles/. $HOME/
 

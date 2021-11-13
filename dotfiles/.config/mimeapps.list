@@ -1,0 +1,8 @@
+[Default Applications]
+x-scheme-handler/gitkraken=GitKraken.desktop
+x-scheme-handler/tg=userapp-Telegram Desktop-SPEAC1.desktop
+x-scheme-handler/http=vivaldi.desktop;
+x-scheme-handler/https=vivaldi.desktop;
+
+[Added Associations]
+x-scheme-handler/tg=userapp-Telegram Desktop-SPEAC1.desktop;
