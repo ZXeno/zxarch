@@ -131,13 +131,13 @@ ForegroundPositive=39,174,96
 ForegroundVisited=155,89,182
 
 [General]
-ColorScheme=Vortex-Dark
-Name=Breeze Dark
+ColorScheme=Vortex-Dark-Color
+Name=Vortex-Dark
 shadeSortColumn=true
 widgetStyle=Breeze
 
 [Icons]
-Theme=Vortex-Dark
+Theme=Vortex-Dark-Icons
 
 [KDE]
 ShowIconsInMenuItems=true

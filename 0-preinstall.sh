@@ -41,8 +41,10 @@ echo "    FORMATTING DISK...$HR    "
 echo "-----------------------------"
 
 # disk prep
-sgdisk -Z ${DISK} && # zap all on disk
-sgdisk -a 2048 -o ${DISK} # new gpt disk 2048 alignment
+sgdisk --zap-all ${DISK} && # zap all on disk
+sgdisk -o ${DISK} # new gpt disk 2048 alignment
+wipefs -a -f ${DISK}
+partprobe -s ${DISK}
 
 # create partitions
 sgdisk -n 1::+1M --typecode=1:ef02 --change-name=1:'BIOSBOOT' ${DISK} # partition 1 (BIOS Boot Partition)

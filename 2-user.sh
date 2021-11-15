@@ -46,9 +46,9 @@ sudo mkdir -p /usr/share/aurorae/themes/Vortex-Aurorae
 tar -xf ${HOME}/zxarch/theme/Vortex-Aurorae.tar.gz -C ${HOME}/zxarch/theme
 sudo cp -rv ${HOME}/zxarch/theme/Vortex-Aurorae/* /usr/share/aurorae/themes/Vortex-Aurorae
 
-sudo mkdir -p /usr/share/icons/Vortex-Dark
+sudo mkdir -p /usr/share/icons/Vortex-Dark-Icons
 tar -xf ${HOME}/zxarch/theme/Vortex-Dark-Icons.tar.gz -C ${HOME}/zxarch/theme
-sudo cp -rv ${HOME}/zxarch/theme/Vortex-Dark-Icons/* /usr/share/icons/Vortex-Dark
+sudo cp -rv ${HOME}/zxarch/theme/Vortex-Dark-Icons/* /usr/share/icons/Vortex-Dark-Icons
 
 sudo mkdir -p /usr/share/themes/Vortex-Dark
 tar -xf ${HOME}/zxarch/theme/Vortex-GTK.tar.gz -C ${HOME}/zxarch/theme
