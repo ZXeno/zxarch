@@ -20,21 +20,11 @@ echo -e "----------------------------------------------------"
 reflector -a 48 -c $iso -f 5 -l 20 --sort rate --save /etc/pacman.d/mirrorlist
 mkdir /mnt
 
-echo -e "\nInstalling prereqs...\n$HR"
-pacman -S --noconfirm gptfdisk btrfs-progs glibc
-
 echo ""
-echo "----------------------------------"
-echo "    SELECT YOUR DISK TO FORMAT    "
-echo "----------------------------------"
-lsblk | grep "disk"
-echo "Please enter disk to work on: (example /dev/sda)"
-read DISK
-echo "THIS WILL FORMAT AND DELETE ALL DATA ON THE DISK"
-read -p "are you sure you want to continue (Y/N):" formatdisk
-case $formatdisk in
-
-y|Y|yes|Yes|YES)
+echo -e "----------------------------------"
+echo -e "    Installing prereqs...\n$HR    "
+echo -e "----------------------------------"
+pacman -S --noconfirm gptfdisk btrfs-progs glibc
 
 echo ""
 echo "-----------------------------"
