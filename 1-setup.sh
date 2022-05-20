@@ -97,7 +97,7 @@ echo ""
 
 
 # IF SETUP IS WRONG THIS IS RUN
-if ! source $HOME/zxarch/configs/setup.conf; then
+if ! source $HOME/zxarch/setup.conf; then
 	# Loop through user input until the user gives a valid username
 	while true
 	do 
@@ -111,11 +111,11 @@ if ! source $HOME/zxarch/configs/setup.conf; then
 		echo "Incorrect username."
 	done 
 # convert name to lowercase before saving to setup.conf
-echo "username=${username,,}" >> ${HOME}/zxarch/configs/setup.conf
+echo "username=${username,,}" >> ${HOME}/zxarch/setup.conf
 
     #Set Password
     read -p "Please enter password:" password
-echo "password=${password,,}" >> ${HOME}/zxarch/configs/setup.conf
+echo "password=${password,,}" >> ${HOME}/zxarch/setup.conf
 
     # Loop through user input until the user gives a valid hostname, but allow the user to force save 
 	while true
@@ -134,7 +134,7 @@ echo "password=${password,,}" >> ${HOME}/zxarch/configs/setup.conf
 		fi 
 	done 
 
-    echo "NAME_OF_MACHINE=${name_of_machine,,}" >> ${HOME}/zxarch/configs/setup.conf
+    echo "NAME_OF_MACHINE=${name_of_machine,,}" >> ${HOME}/zxarch/setup.conf
 fi
 echo "-------------------"
 echo "    ADDING USER    "

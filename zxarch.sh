@@ -4,9 +4,9 @@ SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 SCRIPTS_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 set +a
 
-( bash $SCRIPT_DIR/startup.sh )|& tee startup.log
+( bash ./startup.sh )|& tee startup.log
     source ./setup.conf
-( bash $SCRIPT_DIR/0-preinstall.sh )|& tee 0-preinstall.log
+( bash ./0-preinstall.sh )|& tee 0-preinstall.log
 ( arch-chroot /mnt $HOME/zxarch/1-setup.sh )|& tee 1-setup.log
 if [[ ! $DESKTOP_ENV == server ]]; then
     ( arch-chroot /mnt /usr/bin/runuser -u $USERNAME -- /home/$USERNAME/zxarch/2-user.sh )|& tee 2-user.log

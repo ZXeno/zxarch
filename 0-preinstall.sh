@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+source ./setup.conf
 
 echo ""
 echo "-----------------------------------------------"
@@ -176,3 +176,4 @@ echo ""
 echo "--------------------------------"
 echo "    SYSTEM READY FOR 1-setup    "
 echo "--------------------------------"
+

@@ -4,7 +4,7 @@ echo ""
 echo "-------------------------------"
 echo "    INSTALLING AUR SOFTWARE    "
 echo "-------------------------------"
-source $HOME/zxarch/configs/setup.conf
+source $HOME/zxarch/setup.conf
 
 echo "Cloning YAY"
 cd ~

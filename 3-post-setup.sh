@@ -4,7 +4,7 @@ echo ""
 echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 echo "~    FINAL SETUP AND CONFIGURATION    ~"
 echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-source ${HOME}/zxarch/configs/setup.conf
+source ${HOME}/zxarch/setup.conf
 echo ""
 echo ""
 echo ""
