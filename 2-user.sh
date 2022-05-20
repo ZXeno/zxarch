@@ -64,13 +64,6 @@ echo ""
 echo "-------------------------------------"
 echo "    APPLYING DOTFILES & KDE CONFIG   "
 echo "-------------------------------------"
-
-# export PATH=$PATH:~/.local/bin
-# pip install konsave
-# konsave -i $HOME/zxarch/kde.knsv
-# sleep 1
-# konsave -a kde
-
 cp -R $HOME/zxarch/dotfiles/. $HOME/
 
 echo ""

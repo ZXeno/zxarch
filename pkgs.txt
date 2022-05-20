@@ -42,10 +42,13 @@ dosfstools
 dtc
 efibootmgr
 egl-wayland
+elfutils
 exfat-utils
 extra-cmake-modules
 filelight
 fish
+flatpak
+flatpak-builder
 flex
 fuse2
 fuse3
@@ -100,6 +103,7 @@ neofetch
 networkmanager
 ntfs-3g
 ntp
+obs-studio
 okular
 openbsd-netcat
 openssh
@@ -130,7 +134,6 @@ qemu
 rsync
 sddm
 sddm-kcm
-snapper
 spectacle
 steam
 sudo
@@ -141,6 +144,8 @@ telegram-desktop
 terminus-font
 traceroute
 ttf-cascadia-code
+otf-cascadia-code
+woff2-cascadia-code
 ufw
 unrar
 unzip

@@ -4,11 +4,15 @@ bitwarden
 btrfsmaintenance
 dxvk-bin
 gitkraken
+github-desktop-bin
 nerd-fonts-fira-code
 noto-fonts-emoji
+ocs-url
+obsidian
 plasma-pa
 powershell-bin
-ocs-url
+rider
+spotify
 ttf-droid
 ttf-hack
 ttf-meslo
