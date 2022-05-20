@@ -54,7 +54,7 @@ echo ""
 echo "-----------------------------------------------"
 echo "    INSTALLING BASE SYSTEM - PLEASE STANDBY    "
 echo "-----------------------------------------------"
-sed -n '/'$INSTALL_TYPE'/q;p' $HOME/zxarch/pkg-files/pacman-pkgs.txt | while read line
+sed -n '/'$INSTALL_TYPE'/q;p' $HOME/zxarch/pkgs.txt | while read line
 do
 	if [[ ${line} == '--END OF LIST--' ]]; then
 		continue
