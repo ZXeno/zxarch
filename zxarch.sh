@@ -2,11 +2,10 @@
 set -a
 SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 SCRIPTS_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-CONFIGS_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"/configs
 set +a
 
 ( bash $SCRIPT_DIR/startup.sh )|& tee startup.log
-    source $CONFIGS_DIR/setup.conf
+    source setup.conf
 ( bash $SCRIPT_DIR/0-preinstall.sh )|& tee 0-preinstall.log
 ( arch-chroot /mnt $HOME/zxarch/1-setup.sh )|& tee 1-setup.log
 if [[ ! $DESKTOP_ENV == server ]]; then
@@ -16,5 +15,5 @@ fi
 cp -v *.log /mnt/home/$USERNAME
 
 # cleanup post script - uncomment after development
-rm -rf /mnt/home/$username/zxarch
-rm -rf /mnt/home/$username/yay
+rm -rf /mnt/home/$USERNAME/zxarch
+rm -rf /mnt/home/$USERNAME/yay
