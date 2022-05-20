@@ -16,4 +16,5 @@ cp -v *.log /mnt/home/$USERNAME
 
 # cleanup post script - uncomment after development
 rm -rf /mnt/home/$USERNAME/zxarch
-rm -rf /mnt/home/$USERNAME/yay
+# rm -rf /mnt/home/$USERNAME/yay
+
