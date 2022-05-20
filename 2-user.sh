@@ -6,17 +6,17 @@ echo "    INSTALLING AUR SOFTWARE    "
 echo "-------------------------------"
 source $HOME/zxarch/setup.conf
 
-echo "Cloning YAY"
+echo "Cloning $AUR_HELPER"
 cd ~
-git clone "https://aur.archlinux.org/yay.git"
-cd ${HOME}/yay
+git clone "https://aur.archlinux.org/$AUR_HELPER.git"
+cd ${HOME}/$AUR_HELPER
 makepkg -si --noconfirm
 cd ~
 
 sed -n '/'$INSTALL_TYPE'/q;p' ~/zxarch/aur-pkgs.txt | while read line
 do
     echo "INSTALLING: ${line}"
-    yay -S --noconfirm --needed ${line}
+    $AUR_HELPER -S --noconfirm ${line}
 done
 export PATH=$PATH:~/.local/bin
 

@@ -14,4 +14,3 @@ ttf-meslo
 ttf-ms-fonts
 ttf-roboto
 visual-studio-code-bin
---END AUR PACKAGES--

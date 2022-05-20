@@ -23,7 +23,7 @@ fi
 # set kernel parameter for adding splash screen
 sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="[^"]*/& splash /' /etc/default/grub
 
-
+echo -e "Updating grub..."
 grub-mkconfig -o /boot/grub/grub.cfg
 
 echo ""

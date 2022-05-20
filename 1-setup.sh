@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+source $HOME/zxarch/setup.conf
 echo ""
 echo "---------------------"
 echo "    NETWORK SETUP    "
