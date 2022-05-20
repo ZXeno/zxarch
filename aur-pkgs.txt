@@ -1,0 +1,17 @@
+autojump
+awesome-terminal-fonts
+btrfsmaintenance
+dxvk-bin
+gitkraken
+nerd-fonts-fira-code
+noto-fonts-emoji
+plasma-pa
+powershell-bin
+ocs-url
+ttf-droid
+ttf-hack
+ttf-meslo
+ttf-ms-fonts
+ttf-roboto
+visual-studio-code-bin
+--END AUR PACKAGES--

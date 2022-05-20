@@ -4,7 +4,7 @@ echo ""
 echo "-------------------------------"
 echo "    INSTALLING AUR SOFTWARE    "
 echo "-------------------------------"
-# You can solve users running this script as root with this and then doing the same for the next for statement. However I will leave this up to you.
+source $HOME/zxarch/configs/setup.conf
 
 echo "Cloning YAY"
 cd ~
@@ -13,29 +13,13 @@ cd ${HOME}/yay
 makepkg -si --noconfirm
 cd ~
 
-PKGS=(
-'autojump'
-'awesome-terminal-fonts'
-'btrfsmaintenance'
-'dxvk-bin' # DXVK DirectX to Vulcan
-'gitkraken' # git gui
-'nerd-fonts-fira-code'
-'noto-fonts-emoji'
-'plasma-pa'
-'powershell-bin'
-'ocs-url' # install packages from websites
-'timeshift' # backup software
-'ttf-droid'
-'ttf-hack'
-'ttf-meslo' # Nerdfont package
-'ttf-ms-fonts'
-'ttf-roboto'
-'visual-studio-code-bin'
-)
-
-for PKG in "${PKGS[@]}"; do
-    yay -S --noconfirm $PKG
+sed -n '/'$INSTALL_TYPE'/q;p' ~/zxarch/aur-pkgs.txt | while read line
+do
+    echo "INSTALLING: ${line}"
+    yay -S --noconfirm --needed ${line}
 done
+export PATH=$PATH:~/.local/bin
+
 
 echo ""
 echo "-------------------------------------------------------------"

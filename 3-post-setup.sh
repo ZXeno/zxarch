@@ -4,6 +4,7 @@ echo ""
 echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 echo "~    FINAL SETUP AND CONFIGURATION    ~"
 echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+source ${HOME}/zxarch/configs/setup.conf
 echo ""
 echo ""
 echo ""
@@ -14,6 +15,15 @@ echo "-------------------------------------------"
 if [[ -d "/sys/firmware/efi" ]]; then
     grub-install --efi-directory=/boot ${DISK}
 fi
+
+# set kernel parameter for decrypting the drive
+if [[ "${FS}" == "luks" ]]; then
+    sed -i "s%GRUB_CMDLINE_LINUX_DEFAULT=\"%GRUB_CMDLINE_LINUX_DEFAULT=\"cryptdevice=UUID=${ENCRYPTED_PARTITION_UUID}:ROOT root=/dev/mapper/ROOT %g" /etc/default/grub
+fi
+# set kernel parameter for adding splash screen
+sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="[^"]*/& splash /' /etc/default/grub
+
+
 grub-mkconfig -o /boot/grub/grub.cfg
 
 echo ""
@@ -45,10 +55,8 @@ echo -e "\nEnabling essential services"
 systemctl enable cups.service
 ntpd -qg
 systemctl enable ntpd.service
-systemctl disable dhcpcd.service
-systemctl stop dhcpcd.service
-systemctl enable NetworkManager.service
-systemctl enable bluetooth
+systemctl stop dhcpcd.servicezxarch
+systemctl enable avahi-daemon.service
 systemctl enable btrfs-balance.timer
 systemctl enable btrfs-trim.timer
 echo ""
@@ -58,8 +66,13 @@ echo "-------------------------------------------"
 
 # Remove no password sudo rights
 sed -i 's/^%wheel ALL=(ALL) NOPASSWD: ALL/# %wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
+sed -i 's/^%wheel ALL=(ALL:ALL) NOPASSWD: ALL/# %wheel ALL=(ALL:ALL) NOPASSWD: ALL/' /etc/sudoers
 # Add sudo rights
 sed -i 's/^# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
+sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
+
+rm -r $HOME/zxarch
+rm -r /home/$USERNAME/zxarch
 
 # Replace in the same state
 cd $pwd

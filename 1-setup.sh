@@ -40,6 +40,7 @@ localectl --no-ask-password set-keymap us
 
 # Add sudo no password rights
 sed -i 's/^# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
+sed -i 's/^# %wheel ALL=(ALL:ALL) NOPASSWD: ALL/%wheel ALL=(ALL:ALL) NOPASSWD: ALL/' /etc/sudoers
 
 #Add parallel downloading
 sed -i 's/^#Para/Para/' /etc/pacman.conf
@@ -52,226 +53,114 @@ echo ""
 echo "-----------------------------------------------"
 echo "    INSTALLING BASE SYSTEM - PLEASE STANDBY    "
 echo "-----------------------------------------------"
-
-PKGS=(
-'mesa' # Essential Xorg First
-'xorg'
-'xorg-server'
-'xorg-apps'
-'xorg-drivers'
-'xorg-xkill'
-'xorg-xinit'
-'xorg-xwayland'
-'xterm'
-'plasma-desktop' # KDE Load second
-'alsa-plugins' # audio plugins
-'alsa-utils' # audio utils
-'ark' # compression
-'audiocd-kio' 
-'autoconf' # build
-'automake' # build
-'base'
-'bash-completion'
-'fish'
-'bind'
-'binutils'
-'bison'
-'bluedevil'
-'bluez'
-'bluez-libs'
-'bluez-utils'
-'breeze'
-'breeze-gtk'
-'bridge-utils'
-'btrfs-progs'
-'celluloid' # video players
-'cmatrix'
-'cifs-utils'
-'cronie'
-'cups'
-'dialog'
-'discord'
-'discover'
-'dolphin'
-'dosfstools'
-'dtc'
-'efibootmgr' # EFI boot
-'egl-wayland'
-'exfat-utils'
-'extra-cmake-modules'
-'filelight'
-'fish'
-'flex'
-'fuse2'
-'fuse3'
-'fuseiso'
-'gamemode'
-'gcc'
-'gimp' # Photo editing
-'git'
-'github-cli'
-'gpg'
-'gparted' # partition management
-'gptfdisk'
-'grub'
-'grub-customizer'
-'gst-libav'
-'gst-plugins-good'
-'gst-plugins-ugly'
-'gstreamer'
-'gwenview'
-'haveged'
-'htop'
-'iptables-nft'
-'jdk-openjdk' # Java 17
-'kate'
-'kcodecs'
-'kcoreaddons'
-'kdeplasma-addons'
-'kde-gtk-config'
-'kinfocenter'
-'konsole'
-'kscreen'
-'kvantum-qt5'
-'kwayland'
-'kwayland-integration'
-'kwayland-server'
-'kwin'
-'layer-shell-qt'
-'libdvdcss'
-'libnewt'
-'libtool'
-'linux-zen'
-'linux-zen-headers'
-'linux-firmware'
-'lsof'
-'lutris'
-'lzop'
-'m4'
-'make'
-'milou'
-'nano'
-'neofetch'
-'networkmanager'
-'ntfs-3g'
-'ntp'
-'okular'
-'openbsd-netcat'
-'openssh'
-'os-prober'
-'oxygen'
-'p7zip'
-'pacman-contrib'
-'patch'
-'picom'
-'pkgconf'
-'plasma-nm'
-'powerdevil'
-'powerline-fonts'
-'print-manager'
-'pipewire'
-'pipewire-alsa'
-'pipewire-jack'
-'pipewire-pulse'
-'pipewire-support'
-'pipewire-v4l2'
-'pipewire-zeroconf'
-'python'
-'python-notify2'
-'python-psutil'
-'python-pyqt5'
-'python-pip'
-'qemu'
-'rsync'
-'sddm'
-'sddm-kcm'
-'snapper'
-'spectacle'
-'steam'
-'sudo'
-'swtpm'
-'synergy'
-'systemsettings'
-'telegram-desktop'
-'terminus-font'
-'traceroute'
-'ttf-cascadia-code'
-'ufw'
-'unrar'
-'unzip'
-'usbutils'
-'virt-manager'
-'virt-viewer'
-'vivaldi' # browser
-'vivaldi-ffmpeg-codecs' # browser media codecs pack
-'vlc' # media/video player
-'wget'
-'which'
-'wine-gecko'
-'wine-mono'
-'winetricks'
-'wireplumber'
-'xdg-utils'
-'xdg-desktop-portal-kde'
-'xdg-user-dirs'
-'x264'
-'x265'
-'zeroconf-ioslave'
-'zip'
-)
-
-for PKG in "${PKGS[@]}"; do
-    echo "INSTALLING: ${PKG}"
-    sudo pacman -S "$PKG" --noconfirm --needed
+sed -n '/'$INSTALL_TYPE'/q;p' $HOME/zxarch/pkg-files/pacman-pkgs.txt | while read line
+do
+	if [[ ${line} == '--END OF LIST--' ]]; then
+		continue
+	fi
+	echo "INSTALLING: ${line}"
+	sudo pacman -S --noconfirm --needed ${line}
 done
 
-#
-# determine processor type and install microcode
-# 
-proc_type=$(lscpu | awk '/Vendor ID:/ {print $3}')
-case "$proc_type" in
-	GenuineIntel)
-		print "Installing Intel microcode"
-		pacman -S --noconfirm intel-ucode
-		proc_ucode=intel-ucode.img
-		;;
-	AuthenticAMD)
-		print "Installing AMD microcode"
-		pacman -S --noconfirm amd-ucode
-		proc_ucode=amd-ucode.img
-		;;
-esac	
+echo "-----------------------------"
+echo "    INSTALL CPU MICROCODE    "
+echo "-----------------------------"
+proc_type=$(lscpu)
+if grep -E "GenuineIntel" <<< ${proc_type}; then
+    echo "Installing Intel microcode"
+    pacman -S --noconfirm --needed intel-ucode
+    proc_ucode=intel-ucode.img
+elif grep -E "AuthenticAMD" <<< ${proc_type}; then
+    echo "Installing AMD microcode"
+    pacman -S --noconfirm --needed amd-ucode
+    proc_ucode=amd-ucode.img
+fi	
 
 echo "--------------------------------"
 echo "    INSTALL GRAPHICS DRIVERS    "
 echo "--------------------------------"
-if lspci | grep -E "NVIDIA|GeForce"; then
-    pacman -S nvidia --noconfirm --needed
+gpu_type=$(lspci)
+if grep -E "NVIDIA|GeForce" <<< ${gpu_type}; then
+    pacman -S --noconfirm --needed nvidia
 	nvidia-xconfig
-elif lspci | grep -E "VMWare"; then
-	pacman -S xf86-video-vmware --noconfirm --needed
-elif lspci | grep -E "Radeon"; then
-    pacman -S xf86-video-amdgpu --noconfirm --needed
-elif lspci | grep -E "Integrated Graphics Controller"; then
-    pacman -S libva-intel-driver libvdpau-va-gl lib32-vulkan-intel vulkan-intel libva-intel-driver libva-utils --needed --noconfirm
+elif lspci | grep 'VGA' | grep -E "Radeon|AMD"; then
+    pacman -S --noconfirm --needed xf86-video-amdgpu
+elif grep -E "Integrated Graphics Controller" <<< ${gpu_type}; then
+    pacman -S --noconfirm --needed libva-intel-driver libvdpau-va-gl lib32-vulkan-intel vulkan-intel libva-intel-driver libva-utils lib32-mesa
+elif grep -E "Intel Corporation UHD" <<< ${gpu_type}; then
+    pacman -S --needed --noconfirm libva-intel-driver libvdpau-va-gl lib32-vulkan-intel vulkan-intel libva-intel-driver libva-utils lib32-mesa
 fi
 
 echo ""
 echo "Done!"
 echo ""
-if ! source install.conf; then
-	read -p "Please enter username:" username
-echo "username=$username" >> ${HOME}/zxarch/install.conf
+
+
+# IF SETUP IS WRONG THIS IS RUN
+if ! source $HOME/zxarch/configs/setup.conf; then
+	# Loop through user input until the user gives a valid username
+	while true
+	do 
+		read -p "Please enter username:" username
+		# username regex per response here https://unix.stackexchange.com/questions/157426/what-is-the-regex-to-validate-linux-users
+		# lowercase the username to test regex
+		if [[ "${username,,}" =~ ^[a-z_]([a-z0-9_-]{0,31}|[a-z0-9_-]{0,30}\$)$ ]]
+		then 
+			break
+		fi 
+		echo "Incorrect username."
+	done 
+# convert name to lowercase before saving to setup.conf
+echo "username=${username,,}" >> ${HOME}/zxarch/configs/setup.conf
+
+    #Set Password
+    read -p "Please enter password:" password
+echo "password=${password,,}" >> ${HOME}/zxarch/configs/setup.conf
+
+    # Loop through user input until the user gives a valid hostname, but allow the user to force save 
+	while true
+	do 
+		read -p "Please name your machine:" name_of_machine
+		# hostname regex (!!couldn't find spec for computer name!!)
+		if [[ "${name_of_machine,,}" =~ ^[a-z][a-z0-9_.-]{0,62}[a-z0-9]$ ]]
+		then 
+			break 
+		fi 
+		# if validation fails allow the user to force saving of the hostname
+		read -p "Hostname doesn't seem correct. Do you still want to save it? (y/n)" force 
+		if [[ "${force,,}" = "y" ]]
+		then 
+			break 
+		fi 
+	done 
+
+    echo "NAME_OF_MACHINE=${name_of_machine,,}" >> ${HOME}/zxarch/configs/setup.conf
 fi
-if [ $(whoami) = "root"  ];
-then
-    useradd -m -G wheel,libvirt -s /bin/bash $username 
-	passwd $username
-	cp -R /root/zxarch /home/$username/
-    chown -R $username: /home/$username/zxarch
-	read -p "Please name your machine:" nameofmachine
-	echo $nameofmachine > /etc/hostname
+echo "-------------------"
+echo "    ADDING USER    "
+echo "-------------------"
+if [ $(whoami) = "root"  ]; then
+    groupadd libvirt
+    useradd -m -G wheel,libvirt -s /bin/bash $USERNAME 
+    echo "$USERNAME created, home directory created, added to wheel and libvirt group, default shell set to /bin/bash"
+
+# use chpasswd to enter $USERNAME:$password
+    echo "$USERNAME:$PASSWORD" | chpasswd
+    echo "$USERNAME password set"
+
+	cp -R $HOME/zxarch /home/$USERNAME/
+    chown -R $USERNAME: /home/$USERNAME/zxarch
+    echo "zxarch copied to home directory"
+
+# enter $NAME_OF_MACHINE to /etc/hostname
+	echo $NAME_OF_MACHINE > /etc/hostname
 else
 	echo "You are already a user proceed with aur installs"
 fi
-
+if [[ ${FS} == "luks" ]]; then
+# Making sure to edit mkinitcpio conf if luks is selected
+# add encrypt in mkinitcpio.conf before filesystems in hooks
+    sed -i 's/filesystems/encrypt filesystems/g' /etc/mkinitcpio.conf
+# making mkinitcpio with linux kernel
+    mkinitcpio -p linux
+fi
