@@ -1,5 +1,6 @@
 autojump
 awesome-terminal-fonts
+bitwarden
 btrfsmaintenance
 dxvk-bin
 gitkraken

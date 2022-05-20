@@ -78,10 +78,10 @@ echo "---------------------------------------"
 echo "    INSTALLING NON-AUR APPLICATIONS    "
 echo "---------------------------------------"
 
-mkdir -p ${HOME}/.local/share/bitwarden
-wget -O bitwarden.appimage "https://vault.bitwarden.com/download/?app=desktop&platform=linux"
-mv ${HOME}/bitwarden.appimage ${HOME}/.local/share/bitwarden/bitwarden.appimage
-chmod +rwx ${HOME}/.local/share/bitwarden/bitwarden.appimage
+echo ""
+echo "Installing Dotnet"
+curl -sSL https://dot.net/v1/dotnet-install.sh | sudo bash /dev/stdin -c LTS --install-dir /usr/share/dotnet
+sudo ln -sf /usr/share/dotnet/dotnet /usr/bin/dotnet
 
 # make sure custom application shortcuts are properly configured
 for f in ${HOME}/.local/share/applications/*
