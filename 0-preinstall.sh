@@ -9,8 +9,8 @@ iso=$(curl -4 ifconfig.co/country-iso)
 timedatectl set-ntp true
 pacman -S --noconfirm archlinux-keyring #update keyrings to latest to prevent packages failing to install
 pacman -S --noconfirm pacman-contrib
-sed -i 's/^#Para/Para/' /etc/pacman.conf
-pacman -S --noconfirm reflector rsync grub
+sed -i 's/^#ParallelDownloads/ParallelDownloads/' /etc/pacman.conf
+pacman -S --noconfirm reflector rsync grub efibootmgr
 cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
 
 echo ""
@@ -18,13 +18,13 @@ echo -e "----------------------------------------------------"
 echo -e "    SETTING UP $iso MIRRORS FOR FASTER DOWNLOADS    "
 echo -e "----------------------------------------------------"
 reflector -a 48 -c $iso -f 5 -l 20 --sort rate --save /etc/pacman.d/mirrorlist
-mkdir /mnt
+mkdir /mnt &>/dev/null # Hiding error message if any
 
 echo ""
 echo -e "----------------------------------"
 echo -e "    Installing prereqs...\n$HR    "
 echo -e "----------------------------------"
-pacman -S --noconfirm gptfdisk btrfs-progs glibc
+pacman -S --noconfirm --needed gptfdisk btrfs-progs glibc
 
 echo ""
 echo "-----------------------------"
@@ -40,9 +40,7 @@ sgdisk -a 2048 -o ${DISK} # new gpt disk 2048 alignment
 sgdisk -n 1::+1M --typecode=1:ef02 --change-name=1:'BIOSBOOT' ${DISK} # partition 1 (BIOS Boot Partition)
 sgdisk -n 2::+300M --typecode=2:ef00 --change-name=2:'EFIBOOT' ${DISK} # partition 2 (UEFI Boot Partition)
 sgdisk -n 3::-0 --typecode=3:8300 --change-name=3:'ROOT' ${DISK} # partition 3 (Root), default start, remaining
-if [[ ! -d "/sys/firmware/efi" ]]; then # Checking for bios system
-    sgdisk -A 1:set:2 ${DISK}
-fi
+sgdisk -A 1:set:2 ${DISK}
 partprobe ${DISK} # reread partition table to ensure it is correct
 
 # make filesystems
@@ -142,6 +140,8 @@ echo "    GRUB BIOS Bootloader Install & Check    "
 echo "--------------------------------------------"
 if [[ ! -d "/sys/firmware/efi" ]]; then
     grub-install --boot-directory=/mnt/boot ${DISK}
+else
+    pacstrap /mnt efibootmgr --noconfirm --needed
 fi
 
 echo ""

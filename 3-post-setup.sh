@@ -20,11 +20,13 @@ fi
 if [[ "${FS}" == "luks" ]]; then
     sed -i "s%GRUB_CMDLINE_LINUX_DEFAULT=\"%GRUB_CMDLINE_LINUX_DEFAULT=\"cryptdevice=UUID=${ENCRYPTED_PARTITION_UUID}:ROOT root=/dev/mapper/ROOT %g" /etc/default/grub
 fi
+
 # set kernel parameter for adding splash screen
 sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="[^"]*/& splash /' /etc/default/grub
 
 echo -e "Updating grub..."
-grub-mkconfig -o /boot/grub/grub.cfg
+#grub-mkconfig -o /boot/grub/grub.cfg
+update-grub
 
 echo ""
 echo "---------------------------------"

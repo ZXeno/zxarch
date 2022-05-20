@@ -13,4 +13,5 @@ ttf-hack
 ttf-meslo
 ttf-ms-fonts
 ttf-roboto
+update-grub
 visual-studio-code-bin
