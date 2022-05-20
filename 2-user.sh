@@ -16,7 +16,7 @@ cd ~
 sed -n '/'$INSTALL_TYPE'/q;p' ~/zxarch/aur-pkgs.txt | while read line
 do
     echo "INSTALLING: ${line}"
-    $AUR_HELPER -S --noconfirm ${line}
+    $AUR_HELPER -Sy --noconfirm ${line}
 done
 export PATH=$PATH:~/.local/bin
 
