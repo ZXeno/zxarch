@@ -5,7 +5,7 @@ SCRIPTS_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd 
 set +a
 
 ( bash $SCRIPT_DIR/startup.sh )|& tee startup.log
-    source setup.conf
+    source ./setup.conf
 ( bash $SCRIPT_DIR/0-preinstall.sh )|& tee 0-preinstall.log
 ( arch-chroot /mnt $HOME/zxarch/1-setup.sh )|& tee 1-setup.log
 if [[ ! $DESKTOP_ENV == server ]]; then

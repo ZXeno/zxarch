@@ -8,7 +8,7 @@
 
 # @setting-header General Settings
 # @setting CONFIG_FILE string[setup.conf] Location of setup.conf to be used by set_option and all subsequent scripts. 
-CONFIG_FILE=setup.conf
+CONFIG_FILE=./setup.conf
 if [ ! -f $CONFIG_FILE ]; then # check if file exists
     touch -f $CONFIG_FILE # create file if not exists
 fi
@@ -288,7 +288,7 @@ aurhelper () {
 desktopenv () {
   # Let the user choose Desktop Enviroment from predefined list
   echo -ne "Please select your desired Desktop Enviroment:\n"
-  options=(gnome kde cinnamon xfce mate budgie lxde deepin openbox server)
+  options=(kde server)
   select_option $? 4 "${options[@]}"
   desktop_env=${options[$?]}
   set_option DESKTOP_ENV $desktop_env

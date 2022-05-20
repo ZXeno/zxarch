@@ -3,15 +3,15 @@ echo ""
 echo "---------------------"
 echo "    NETWORK SETUP    "
 echo "---------------------"
-pacman -S networkmanager dhclient --noconfirm --needed
+pacman -S --noconfirm --needed networkmanager dhclient
 systemctl enable --now NetworkManager
 
 echo ""
 echo "-----------------------------------------------"
 echo "    SETTING UP MIRRORS FOR OPTIMAL DOWNLOAD    "
 echo "-----------------------------------------------"
-pacman -S --noconfirm pacman-contrib curl
-pacman -S --noconfirm reflector rsync
+pacman -S --noconfirm --needed pacman-contrib curl
+pacman -S --noconfirm --needed reflector rsync grub arch-install-scripts git
 cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
 
 nc=$(grep -c ^processor /proc/cpuinfo)
@@ -20,9 +20,9 @@ echo "-------------------------------------------------"
 echo "Changing the makeflags for "$nc" cores."
 TOTALMEM=$(cat /proc/meminfo | grep -i 'memtotal' | grep -o '[[:digit:]]*')
 if [[  $TOTALMEM -gt 8000000 ]]; then
-sed -i "s/#MAKEFLAGS=\"-j2\"/MAKEFLAGS=\"-j$nc\"/g" /etc/makepkg.conf
-echo "Changing the compression settings for "$nc" cores."
-sed -i "s/COMPRESSXZ=(xz -c -z -)/COMPRESSXZ=(xz -c -T $nc -z -)/g" /etc/makepkg.conf
+	sed -i "s/#MAKEFLAGS=\"-j2\"/MAKEFLAGS=\"-j$nc\"/g" /etc/makepkg.conf
+	echo "Changing the compression settings for "$nc" cores."
+	sed -i "s/COMPRESSXZ=(xz -c -z -)/COMPRESSXZ=(xz -c -T $nc -z -)/g" /etc/makepkg.conf
 fi
 
 echo ""
@@ -31,23 +31,23 @@ echo "    SETUP LANGUAGE TO US AND SET LOCALE    "
 echo "-------------------------------------------"
 sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
 locale-gen
-timedatectl --no-ask-password set-timezone America/Los_Angeles
+timedatectl --no-ask-password set-timezone ${TIMEZONE}
 timedatectl --no-ask-password set-ntp 1
 localectl --no-ask-password set-locale LANG="en_US.UTF-8" LC_TIME="en_US.UTF-8"
-
+ln -s /usr/share/zoneinfo/${TIMEZONE} /etc/localtime
 # Set keymaps
-localectl --no-ask-password set-keymap us
+localectl --no-ask-password set-keymap ${KEYMAP}
 
 # Add sudo no password rights
 sed -i 's/^# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
 sed -i 's/^# %wheel ALL=(ALL:ALL) NOPASSWD: ALL/%wheel ALL=(ALL:ALL) NOPASSWD: ALL/' /etc/sudoers
 
 #Add parallel downloading
-sed -i 's/^#Para/Para/' /etc/pacman.conf
+sed -i 's/^#ParallelDownloads/ParallelDownloads/' /etc/pacman.conf
 
 #Enable multilib
 sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
-pacman -Sy --noconfirm
+pacman -Sy --noconfirm --needed
 
 echo ""
 echo "-----------------------------------------------"
